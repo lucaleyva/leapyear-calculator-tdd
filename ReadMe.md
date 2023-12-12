@@ -1,10 +1,37 @@
-## Kata Instructions
+# Leap Year Calculator Kata Instructions
 #### • Write a function that returns true or false depending on whether its input integer is a leap year or not.
 #### • A leap year is defined as one that is divisible by 4, but is not otherwise divisible by 100 unless it is also divisible by 400.
 #### • For example, 2001 is a typical common year and 1996 is a typical leap year, whereas 1900 is an atypical common year and 2000 is an atypical leap year.
 <br>
-Following these steps will guide you through the Test-Driven Development (TDD) process for the leap year kata.
+This project is a simple Java application that calculates if a given year is a leap year or not. It follows the TDD (Test-Driven Development) approach, where tests are written before the actual implementation.
+TDD Process
+<br>
+The TDD process followed in this project is as follows:
 
+1. Write a failing test: Before writing any implementation code, a test case is written that fails because the required functionality is not yet implemented.
+2. Write minimal code to pass the test: The minimal amount of code is written to make the test pass.
+3. Refactor: The code is then refactored to meet quality standards while ensuring that the test still passes.
+
+
+This cycle is repeated for each new feature or functionality.
+
+## Project Structure
+- src/main/java/LeapYear.java: This is the main class that contains the logic for determining if a year is a leap year.
+- src/test/java/LeapYearTest.java: This class contains the unit tests for the LeapYear class.
+- pom.xml: This is the Maven Project Object Model (POM) file. It contains information about the project and configuration details used by Maven to build the project.
+
+## Installation
+
+To install the dependencies, you need to have Maven installed. Once you have Maven, you can install the dependencies using the following command:
+```mvn install```
+
+Running the Tests
+
+To run the tests, use the following command:
+```mvn test```
+
+## TDD Steps
+Following these steps will guide you through the Test-Driven Development (TDD) process for the leap year kata.
 ### Step 1: Write a failing test for a "common year" that is not divisible by 4.
 
 ```java
