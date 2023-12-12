@@ -1,38 +1,38 @@
-# Leap Year Calculator Kata Instructions
-#### • Write a function that returns true or false depending on whether its input integer is a leap year or not.
-#### • A leap year is defined as one that is divisible by 4, but is not otherwise divisible by 100 unless it is also divisible by 400.
-#### • For example, 2001 is a typical common year and 1996 is a typical leap year, whereas 1900 is an atypical common year and 2000 is an atypical leap year.
-<br>
-This project is a simple Java application that calculates if a given year is a leap year or not. It follows the TDD (Test-Driven Development) approach, where tests are written before the actual implementation.
-TDD Process
-<br>
-The TDD process followed in this project is as follows:
+# Setting Up a New Maven Project in IntelliJ IDEA
 
-1. Write a failing test: Before writing any implementation code, a test case is written that fails because the required functionality is not yet implemented.
-2. Write minimal code to pass the test: The minimal amount of code is written to make the test pass.
-3. Refactor: The code is then refactored to meet quality standards while ensuring that the test still passes.
+## Install IntelliJ IDEA
+Download and install IntelliJ IDEA (Community Edition) from [JetBrains](https://www.jetbrains.com/idea/download/).
 
+## Create a New Project
+Open IntelliJ IDEA and on the welcome screen, select "New Project".
 
-This cycle is repeated for each new feature or functionality.
+## Select Project SDK
+Choose Java from the list on the left and set the "Project SDK" to Java 21.
 
-## Project Structure
-- src/main/java/LeapYear.java: This is the main class that contains the logic for determining if a year is a leap year.
-- src/test/java/LeapYearTest.java: This class contains the unit tests for the LeapYear class.
-- pom.xml: This is the Maven Project Object Model (POM) file. It contains information about the project and configuration details used by Maven to build the project.
+## Configure Project
+Select "Maven" as the project type and check "Create from archetype", choosing `maven-archetype-quickstart`. Click "Next".
 
-## Installation
+## Project Details
+Enter your GroupId (e.g., `com.example`) and ArtifactId (e.g., `LeapYearCalculator`). Choose a project name and location. Click "Finish".
 
-To install the dependencies, you need to have Maven installed. Once you have Maven, you can install the dependencies using the following command:
-```mvn install```
+## Update `pom.xml` for JUnit 5
+Add the JUnit 5 dependency to your `pom.xml`:
 
-Running the Tests
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.7.0</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+```
 
-To run the tests, use the following command:
-```mvn test```
+# TDD Steps for Leap Year Calculator Kata
 
-## TDD Steps
-Following these steps will guide you through the Test-Driven Development (TDD) process for the leap year kata.
-### Step 1: Write a failing test for a "common year" that is not divisible by 4.
+## Step 1: Write a Failing Test for a "Common Year"
+Create `LeapYearTest.java` in `src/test/java` and write your first failing test using the Given-When-Then format:
 
 ```java
 import org.junit.jupiter.api.Test;
@@ -40,53 +40,50 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class LeapYearTest {
 
-    @DisplayName("NOT divisible by 4")
     @Test
     public void itValidatesCommonYearIsNotDivisibleBy4() {
-        //Arrange
+        // Given: a year
         int year = 2001;
-        boolean expected = false;
-        //Act
-        boolean result = LeapYearCalculator.isLeapYear(year);
-        //Assert
-        assertEquals(expected, result, ()-> year + " is not a Common Year");
+        
+        // When: checking if it's a leap year
+        boolean result = LeapYear.isLeapYear(year);
+        
+        // Then: it should not be a leap year
+        assertFalse(result, () -> year + " should not be a leap year");
     }
 }
 ```
 
-### Step 2: Write the production code to pass the failing test.
+## Step 2: Write the Production Code
+Create `LeapYear.java` in `src/main/java`:
 
 ```java
 public class LeapYear {
 
     public static boolean isLeapYear(int year) {
-        return false; // always return false for now
+        return false;
     }
 }
 ```
 
-### Step 3: Write a failing test for a "common leap year" that is divisible by 4 but not by 100.
+## Step 3: Failing Test for a "Typical Leap Year"
+Add another test method:
 
 ```java
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LeapYearTest {
+// ...
 
-    // Previous test omitted for brevity
-
-    @DisplayName("Divisible by 4 NOT by 100")
-    @Test
-    public void itValidatesTypicalLeapYearIsDivisibleBy4_NotBy100() {
-        int year = 1996;
-        boolean expected = true;
-        boolean result = LeapYearCalculator.isLeapYear(year);
-        assertEquals(expected, result, () -> expected + " this is not a Typical Leap Year");
-    }
+@Test
+public void itValidatesTypicalLeapYearIsDivisibleBy4_NotBy100() {
+    int year = 1996;
+    boolean result = LeapYear.isLeapYear(year);
+    assertTrue(result, () -> year + " should be a typical leap year");
 }
 ```
 
-### Step 4: Update the production code to pass the new failing test.
+## Step 4: Update Production Code
+Modify `LeapYear.java`:
 
 ```java
 public class LeapYear {
@@ -97,28 +94,20 @@ public class LeapYear {
 }
 ```
 
-### Step 5: Write a failing test for an "atypical common year" that is divisible by 100 but not by 400. An atypical common year should return false as it is not a Leap Year.
+## Step 5: Failing Test for an "Atypical Common Year"
+Add a new test method:
 
 ```java
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
-public class LeapYearTest {
-
-    // Previous tests omitted for brevity
-
-    @DisplayName("Divisible by 100 but NOT by 400")
-    @Test
-    public void itReturnsFalseIfYearIsDivisibleBy100_NotBy400(){
-        int year = 1900;
-        boolean expected = false;
-        boolean result = LeapYearCalculator.isLeapYear(year);
-        assertEquals(expected, result, ()-> expected + " is not an atypical common year.");
-    }
+@Test
+public void itReturnsFalseIfYearIsDivisibleBy100_NotBy400(){
+    int year = 1900;
+    boolean result = LeapYear.isLeapYear(year);
+    assertFalse(result, () -> year + " should be an atypical common year");
 }
 ```
 
-### Step 6: Update the production code to pass the new failing test.
+## Step 6: Update Production Code
+Modify `LeapYear.java`:
 
 ```java
 public class LeapYear {
@@ -129,28 +118,20 @@ public class LeapYear {
 }
 ```
 
-### Step 7: Write a failing test for an "atypical leap year" that is divisible by both 100 and 400.
+## Step 7: Failing Test for an "Atypical Leap Year"
+Add another test method:
 
 ```java
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-public class LeapYearTest {
-
-    // Previous tests omitted for brevity
-
-    @DisplayName("Divisible by 4 AND 400")
-    @Test
-    public void itValidatesAtypicalLeapYearIsDivisibleBy4And400(){
-        int year = 2000;
-        boolean expected = true;
-        boolean result = LeapYearCalculator.isLeapYear(year);
-        assertEquals(expected, result, ()-> expected + " is not an atypical leap year");
-    }
+@Test
+public void itValidatesAtypicalLeapYearIsDivisibleBy4And400(){
+    int year = 2000;
+    boolean result = LeapYear.isLeapYear(year);
+    assertTrue(result, () -> year + " should be an atypical leap year");
 }
 ```
 
-### Step 8: Update the production code to pass the new failing test.
+## Step 8: Update Production Code
+Update `LeapYear.java`:
 
 ```java
 public class LeapYear {
@@ -161,8 +142,9 @@ public class LeapYear {
 }
 ```
 
-### Step 9: Refactor to a composed method for readability.
-#### Step 9a: Extract out the "common leap year" logic (divisible by 4)
+## Refactor to a Composed Method for Readability
+### Step 9: Extract "Common Leap Year" Logic
+Refactor `LeapYear.java`:
 
 ```java
 public class LeapYear {
@@ -176,7 +158,9 @@ public class LeapYear {
     }
 }
 ```
-#### Step 9b: Extract out the "is not an atypical common year" logic (NOT divisible by 100)
+
+### Step 10: Extract "Not Atypical Common Year" Logic
+Refactor `LeapYear.java`:
 
 ```java
 public class LeapYear {
@@ -195,7 +179,8 @@ public class LeapYear {
 }
 ```
 
-#### Step 9c: Extract out the "atypical leap year" logic (divisible by 400)
+### Step 11: Extract "Atypical Leap Year" Logic
+Refactor `LeapYear.java`:
 
 ```java
 public class LeapYear {
@@ -217,3 +202,7 @@ public class LeapYear {
     }
 }
 ```
+
+## Running Tests and Development
+### Step 12: Run Tests
+Right-click on `LeapYearTest.java` and select "Run 'LeapYearTest'". Follow the TDD cycle: write tests, make them fail, write code to pass, and refactor.
